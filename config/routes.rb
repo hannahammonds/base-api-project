@@ -27,8 +27,9 @@ Rails.application.routes.draw do
         get :me
         post :create
       end
+      resources :plants 
+      get 'get_plants', to: 'plants#get_plants'
     end
-  end
-
-  resources :plants 
+  end 
+  
 end

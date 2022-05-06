@@ -1,6 +1,6 @@
 class PlantsController < ApplicationController
     before_action :require_user 
-    
+
     def create 
 
     end
@@ -13,7 +13,7 @@ class PlantsController < ApplicationController
 
     end
 
-    def show_plants 
+    def get_plants 
 
     end
 end
