@@ -28,9 +28,11 @@ Rails.application.routes.draw do
         post :create
       end
       # post localhost:3000/api/v1/plants
+        namespace :plants do
+          # localhost:3000/api/v1/get_plants
+          get 'get_plants' 
+        end
       resources :plants 
-      # localhost:3000/api/v1/get_plants
-      get 'get_plants', to: 'plants#get_plants'
     end
   end 
   

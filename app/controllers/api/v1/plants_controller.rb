@@ -5,13 +5,12 @@ module Api
                 # getting the result when creating a plant
                 # current user 
                 # params
-                result = Plants.new_plant(params, @current_user)
+                result = Plants.new_plant(plant_params, @current_user)
                 # return an error when failed result 
-                render_error(errors: 'Plant not saved', status: 401) and return unless result.success?
-                
+                render_error(errors: 'Plant not saved', status: 400.) and return unless result.success? 
                 # create payload
                 payload = {
-                    plant: PlantBlueprint.render_as_has(result.payload) 
+                    plant: PlantBlueprint.render_as_hash(result.payload) 
                 }
                 # return payload with success
                 render_success(payload: payload) 
@@ -21,25 +20,32 @@ module Api
                 # getting the result when creating a plant
                 # current user 
                 # params
-                result = Plants.update_plant(params[:id], @current_user)
+                result = Plants.update_plant(params[:id], plant_params, @current_user)
                 # return an error when failed result 
-                render_error(errors: 'Plant not saved', status: 401) and return unless result.success?
+                render_error(errors: 'Plant not saved', status: 40) and return unless result.success?
                 
                 # create payload
                 payload = {
-                    plant: PlantBlueprint.render_as_has(result.payload) 
+                    plant: PlantBlueprint.render_as_hash(result.payload), 
                 }
                 # return payload with success
                 render_success(payload: payload) 
             end
         
             def destroy
-        
+                result = Plants.destroy_plant(params[:id], @current_user)
+                render_error(errors: "Plant did not delete!", status: 400) and return unless result.success?
+                render_success(payload: nil)
             end
         
             def get_plants 
-        
+                render success(payload: PlantBlueprint.render_as_has(@current_user.plants))
             end
+        end
+
+        private 
+        def plant_params
+            params.require(:seed_name).permit(:amount, :weeks_to_mature, :growing_season, :has_been_planted, :when_planted)
         end
     end
 end

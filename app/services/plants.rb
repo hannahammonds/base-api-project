@@ -2,31 +2,29 @@
 module Plants 
     def self.new_plant(params, current_user) 
         # creating an unsaved record
-        #plant = current_user.plants.new(params)
-        plant = Plant.new(
-            seed_name: params[:seed_name],
-            amount: params[:amount],
-            weeks_to_mature: params[:weeks_to_mature],
-            growing_season: params[:growing_season],
-            has_been_planted: params[:has_been_planted],
-            when_planted: params[:when_planted]
-        )
+        plant = current_user.plants.new(params)
         # send back results depending on if record is valid
-        plant.save!
-
-        return ServiceContract.error('Error saving plant.') unless plant.save 
         
+        return ServiceContract.error('Error saving plant.') unless plant.save 
         ServiceContract.success(plant) 
     end
 
-    def self.update_plant(plant_id, params)
+    def self.update_plant(plant_id, params, current_user)
         #update with plant id
-        plant = Plant.find(plant_id)
+        plant = current_user.plants.find(plant_id)
         #update
         #return error if not successful
         return ServiceContract.error('Plant did not save successfully.') unless plant.update(params)
         #return success if successful
         ServiceContract.success(plant)
+    end
+
+    def self.destroy_plant(plant_id, params, current_user)
+        plant = current_user.plants.find(plant_id)
+        ServiceContract.error('Error deleting plant') and return unless plant.destroy 
+        ServiceContract.success(payload: nil)
+    end
+    
 
     end
 end
