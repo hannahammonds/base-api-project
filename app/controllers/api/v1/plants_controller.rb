@@ -7,7 +7,7 @@ module Api
                 # params
                 result = Plants.new_plant(plant_params, @current_user)
                 # return an error when failed result 
-                render_error(errors: 'Plant not saved', status: 400.) and return unless result.success? 
+                render_error(errors: 'Plant not saved') and return unless result.success? 
                 # create payload
                 payload = {
                     plant: PlantBlueprint.render_as_hash(result.payload) 
@@ -22,7 +22,7 @@ module Api
                 # params
                 result = Plants.update_plant(params[:id], plant_params, @current_user)
                 # return an error when failed result 
-                render_error(errors: 'Plant not saved', status: 40) and return unless result.success?
+                render_error(errors: 'Plant not saved', status: 400) and return unless result.success?
                 
                 # create payload
                 payload = {
@@ -39,13 +39,13 @@ module Api
             end
         
             def get_plants 
-                render success(payload: PlantBlueprint.render_as_has(@current_user.plants))
+                render success(payload: PlantBlueprint.render_as_hash(@current_user.plants))
             end
-        end
 
         private 
-        def plant_params
-            params.require(:seed_name).permit(:amount, :weeks_to_mature, :growing_season, :has_been_planted, :when_planted)
+          def plant_params
+            params.require(:plant).permit(:seed_name, :amount, :weeks_to_mature, :growing_season, :has_been_planted, :when_planted)
+          end
         end
     end
 end

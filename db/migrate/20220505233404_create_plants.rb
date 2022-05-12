@@ -7,7 +7,7 @@ class CreatePlants < ActiveRecord::Migration[6.1]
       t.string :growing_season 
       t.boolean :has_been_planted, default: false
       t.date :when_planted
-
+      t.integer :user_id
       t.timestamps
     end
   end

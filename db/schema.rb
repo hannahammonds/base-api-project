@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2022_05_05_233404) do
     t.string "growing_season"
     t.boolean "has_been_planted", default: false
     t.date "when_planted"
+    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

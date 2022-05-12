@@ -5,7 +5,7 @@ module Plants
         plant = current_user.plants.new(params)
         # send back results depending on if record is valid
         
-        return ServiceContract.error('Error saving plant.') unless plant.save 
+        return ServiceContract.error('Error saving plant.') unless plant.save!  
         ServiceContract.success(plant) 
     end
 
@@ -19,14 +19,12 @@ module Plants
         ServiceContract.success(plant)
     end
 
-    def self.destroy_plant(plant_id, params, current_user)
+    def self.destroy_plant(plant_id, current_user)
         plant = current_user.plants.find(plant_id)
         ServiceContract.error('Error deleting plant') and return unless plant.destroy 
         ServiceContract.success(payload: nil)
     end
     
-
-    end
 end
 
 
