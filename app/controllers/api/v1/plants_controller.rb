@@ -39,7 +39,7 @@ module Api
             end
         
             def get_plants 
-                render success(payload: PlantBlueprint.render_as_hash(@current_user.plants))
+                render_success(payload: PlantBlueprint.render_as_hash(@current_user.plants))
             end
 
         private 
